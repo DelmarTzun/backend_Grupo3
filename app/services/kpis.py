@@ -6,27 +6,12 @@ SQL Oracle puro (copiable a SQL Developer).
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
 from typing import Any
 
 from app.database import fetch_one
 
 
-def _respuesta(
-    *,
-    question: str,
-    data: Any,
-    unit: str,
-    interpretation: str,
-) -> dict[str, Any]:
-    return {
-        "question": question,
-        "interpretation": interpretation,
-        "unit": unit,
-        "source": "Oracle Database · esquema DBA_COMPRAS",
-        "analyzed_at": datetime.now(timezone.utc).isoformat(),
-        "data": data,
-    }
+from app.utils.responses import build_dashboard_response as _respuesta
 
 
 def obtener_resumen_kpis() -> dict[str, Any]:

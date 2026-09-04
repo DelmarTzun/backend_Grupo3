@@ -40,6 +40,16 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    import oracledb
+    from fastapi.responses import JSONResponse
+
+    @app.exception_handler(oracledb.Error)
+    async def oracledb_exception_handler(request, exc):
+        return JSONResponse(
+            status_code=500,
+            content={"status": "error", "message": f"Error de base de datos: {str(exc)}"}
+        )
+
     app.include_router(health_router)
     app.include_router(api_router)
 

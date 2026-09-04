@@ -91,13 +91,10 @@ def fetch_all(
     params: Sequence[Any] | dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     """Ejecuta un SELECT y devuelve todas las filas como diccionarios."""
-    try:
-        with get_connection() as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(sql, params or {})
-                return rows_to_dicts(cursor)
-    except oracledb.Error as exc:
-        raise HTTPException(status_code=500, detail=f"Error Oracle: {exc}") from exc
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(sql, params or {})
+            return rows_to_dicts(cursor)
 
 
 def fetch_one(

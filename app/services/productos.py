@@ -13,25 +13,7 @@ from typing import Any
 from app.database import fetch_all
 
 
-def _respuesta(
-    *,
-    question: str,
-    data: Any,
-    unit: str,
-    interpretation: str,
-    extra: dict[str, Any] | None = None,
-) -> dict[str, Any]:
-    payload = {
-        "question": question,
-        "interpretation": interpretation,
-        "unit": unit,
-        "source": "Oracle Database · esquema DBA_COMPRAS",
-        "analyzed_at": datetime.now(timezone.utc).isoformat(),
-        "data": data,
-    }
-    if extra:
-        payload.update(extra)
-    return payload
+from app.utils.responses import build_dashboard_response as _respuesta
 
 
 def top_productos_cantidad() -> dict[str, Any]:

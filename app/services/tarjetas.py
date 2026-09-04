@@ -7,27 +7,12 @@ Tablas: TBL_TARJETAS, TBL_MARCAS, TBL_ENC_COMPRAS, TBL_CLIENTES
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
 from typing import Any
 
 from app.database import fetch_all
 
 
-def _respuesta(
-    *,
-    question: str,
-    data: Any,
-    unit: str,
-    interpretation: str,
-) -> dict[str, Any]:
-    return {
-        "question": question,
-        "interpretation": interpretation,
-        "unit": unit,
-        "source": "Oracle Database · esquema DBA_COMPRAS",
-        "analyzed_at": datetime.now(timezone.utc).isoformat(),
-        "data": data,
-    }
+from app.utils.responses import build_dashboard_response as _respuesta
 
 
 def marcas_resumen() -> dict[str, Any]:

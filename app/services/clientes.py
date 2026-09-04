@@ -15,28 +15,12 @@ Patrón:
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
 from typing import Any
 
 from app.database import fetch_all
 
 
-def _respuesta(
-    *,
-    question: str,
-    data: Any,
-    unit: str,
-    interpretation: str,
-) -> dict[str, Any]:
-    """Formato común de respuesta para el dashboard / presentación."""
-    return {
-        "question": question,
-        "interpretation": interpretation,
-        "unit": unit,
-        "source": "Oracle Database · esquema DBA_COMPRAS",
-        "analyzed_at": datetime.now(timezone.utc).isoformat(),
-        "data": data,
-    }
+from app.utils.responses import build_dashboard_response as _respuesta
 
 
 def top_por_monto() -> dict[str, Any]:
