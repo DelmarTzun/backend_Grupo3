@@ -58,9 +58,17 @@ backend_Grupo3/
     ├── routers/
     │   ├── __init__.py  ← registra los routers bajo /api
     │   ├── health.py    ← /health y /meta/tables
-    │   └── clientes.py  ← EJEMPLO de endpoints
+    │   ├── clientes.py
+    │   ├── tarjetas.py
+    │   ├── productos.py
+    │   ├── tiempo.py
+    │   └── kpis.py
     ├── services/
-    │   └── clientes.py  ← EJEMPLO de consultas SQL
+    │   ├── clientes.py
+    │   ├── tarjetas.py
+    │   ├── productos.py
+    │   ├── tiempo.py
+    │   └── kpis.py
     └── schemas/
         └── common.py    ← modelos de respuesta Pydantic
 ```
@@ -208,15 +216,15 @@ Todos los endpoints deben devolver este formato:
 
 ## División de trabajo
 
-| Dominio | Archivos a crear |
-|---------|-----------------|
-| Clientes *(ejemplo ya hecho)* | `services/clientes.py`, `routers/clientes.py` |
-| Tarjetas | `services/tarjetas.py`, `routers/tarjetas.py` |
-| Productos y categorías | `services/productos.py`, `routers/productos.py` |
-| Tiempo y tendencias | `services/tiempo.py`, `routers/tiempo.py` |
-| KPIs del dashboard | `services/kpis.py`, `routers/kpis.py` |
+| Dominio | Archivos | Estado |
+|---------|----------|--------|
+| Clientes | `services/clientes.py`, `routers/clientes.py` | Listo |
+| Tarjetas | `services/tarjetas.py`, `routers/tarjetas.py` | Listo |
+| Productos y categorías | `services/productos.py`, `routers/productos.py` | Listo |
+| Tiempo y tendencias | `services/tiempo.py`, `routers/tiempo.py` | Listo |
+| KPIs del dashboard | `services/kpis.py`, `routers/kpis.py` | Listo |
 
-Después de crear cada par servicio + router, registrarlo en `app/routers/__init__.py`.
+Para agregar más consultas: seguir el mismo patrón y registrar el router en `app/routers/__init__.py`.
 
 ---
 
@@ -229,6 +237,26 @@ Después de crear cada par servicio + router, registrarlo en `app/routers/__init
 | GET | `/health?check_db=true` | Estado + conexión Oracle |
 | GET | `/meta/tables` | Lista de tablas del esquema |
 | GET | `/meta/tables/{nombre}` | Columnas de una tabla |
-| GET | `/api/clientes/top-monto` | Top 10 clientes por monto |
+| GET | `/api/clientes/top-monto` | Top 10 por monto |
+| GET | `/api/clientes/top-compras` | Top 10 por número de compras |
+| GET | `/api/clientes/ticket-promedio` | Valor promedio de compra por cliente |
 | GET | `/api/clientes/sin-compras` | Clientes sin compras |
-| GET | `/api/clientes/ranking` | Ranking por monto (DENSE_RANK) |
+| GET | `/api/clientes/sobre-promedio` | Consumo por encima del promedio |
+| GET | `/api/clientes/ranking` | Ranking DENSE_RANK por monto |
+| GET | `/api/tarjetas/marcas` | Marcas: compras, monto y participación % |
+| GET | `/api/tarjetas/credito-vs-debito` | Crédito vs débito |
+| GET | `/api/tarjetas/promedio-por-tipo` | Promedio de gasto por tipo |
+| GET | `/api/tarjetas/clientes-multiples` | Clientes con más de una tarjeta |
+| GET | `/api/productos/top-cantidad` | Top 10 por cantidad |
+| GET | `/api/productos/top-ingresos` | Top 10 por ingresos |
+| GET | `/api/productos/categorias` | Ventas por categoría (mayor/menor) |
+| GET | `/api/productos/top-por-categoria` | Más vendido por categoría (PARTITION BY) |
+| GET | `/api/productos/sin-compras` | Productos nunca comprados |
+| GET | `/api/productos/precio-promedio-categoria` | Precio promedio por categoría |
+| GET | `/api/productos/sobre-promedio-categoria` | Precio sobre promedio de categoría |
+| GET | `/api/productos/diferencia-precios` | Precio sugerido vs unitario |
+| GET | `/api/tiempo/compras-por-mes` | Total de compras por mes |
+| GET | `/api/tiempo/ingresos-por-mes` | Ingresos por mes + mes mayor |
+| GET | `/api/tiempo/evolucion-mensual` | Tendencia, promedio y variación % |
+| GET | `/api/tiempo/ranking-meses` | Ranking de meses por facturación |
+| GET | `/api/kpis/resumen` | KPIs globales del dashboard |
