@@ -1,4 +1,6 @@
-fastapi>=0.115.0
-uvicorn[standard]>=0.32.0
-oracledb>=2.5.0
-pydantic-settings>=2.6.0
+# Versiones validadas para despliegue (compatible con Python 3.12 en Azure)
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+oracledb==4.0.2
+pydantic-settings==2.15.0
+gunicorn==23.0.0
